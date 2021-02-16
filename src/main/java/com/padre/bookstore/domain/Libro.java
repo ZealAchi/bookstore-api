@@ -22,14 +22,14 @@ public class Libro  implements Serializable{
 	private String text;
 	
 	@ManyToOne
-	@JoinColumn(name="categoria_id")
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
 	
 	
 	public Libro() {
-		super();
 	}
+
 	public Libro(Integer id, String title, String name_author, String text, Categoria categoria) {
 		super();
 		this.id = id;
@@ -78,8 +78,33 @@ public class Libro  implements Serializable{
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Libro other = (Libro) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 	
 	
-	
+
 	
 }
