@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.padre.bookstore.domain.Categoria;
 import com.padre.bookstore.dtos.CategoriaDTO;
 import com.padre.bookstore.repositories.CategoriaRepository;
+import com.padre.bookstore.resources.exceptions.DataIntegrityViolationException;
 import com.padre.bookstore.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -36,6 +37,11 @@ public class CategoriaService {
 	}
 	public void delete(Integer id) {
 		findById(id);
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);		
+		} catch (Exception e) {
+			throw new DataIntegrityViolationException("La categoria no puede ser eliminada! Posiblemente tiene libros asociados");
+		}
+	
 	}
 }
